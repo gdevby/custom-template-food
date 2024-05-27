@@ -818,6 +818,36 @@ export interface ApiDoughDough extends Schema.CollectionType {
   };
 }
 
+export interface ApiIngredientIngredient extends Schema.CollectionType {
+  collectionName: 'ingredients';
+  info: {
+    singularName: 'ingredient';
+    pluralName: 'ingredients';
+    displayName: 'Ingredient';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::ingredient.ingredient',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::ingredient.ingredient',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiSizeSize extends Schema.CollectionType {
   collectionName: 'sizes';
   info: {
@@ -859,6 +889,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::dough.dough': ApiDoughDough;
+      'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::size.size': ApiSizeSize;
     }
   }
