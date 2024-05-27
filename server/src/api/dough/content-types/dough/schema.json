@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "doughs",
+  "info": {
+    "singularName": "dough",
+    "pluralName": "doughs",
+    "displayName": "Dough"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    }
+  }
+}
