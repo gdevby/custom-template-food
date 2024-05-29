@@ -15,6 +15,12 @@
       "type": "string",
       "unique": true,
       "required": true
+    },
+    "pizzas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pizza.pizza",
+      "mappedBy": "doughs"
     }
   }
 }

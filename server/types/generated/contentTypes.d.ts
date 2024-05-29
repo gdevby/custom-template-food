@@ -800,6 +800,11 @@ export interface ApiDoughDough extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
+    pizzas: Attribute.Relation<
+      'api::dough.dough',
+      'manyToMany',
+      'api::pizza.pizza'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -830,6 +835,11 @@ export interface ApiIngredientIngredient extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
+    pizzas: Attribute.Relation<
+      'api::ingredient.ingredient',
+      'manyToMany',
+      'api::pizza.pizza'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -841,6 +851,52 @@ export interface ApiIngredientIngredient extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::ingredient.ingredient',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPizzaPizza extends Schema.CollectionType {
+  collectionName: 'pizzas';
+  info: {
+    singularName: 'pizza';
+    pluralName: 'pizzas';
+    displayName: 'Pizza';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    sizes: Attribute.Relation<
+      'api::pizza.pizza',
+      'manyToMany',
+      'api::size.size'
+    >;
+    doughs: Attribute.Relation<
+      'api::pizza.pizza',
+      'manyToMany',
+      'api::dough.dough'
+    >;
+    ingredients: Attribute.Relation<
+      'api::pizza.pizza',
+      'manyToMany',
+      'api::ingredient.ingredient'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::pizza.pizza',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::pizza.pizza',
       'oneToOne',
       'admin::user'
     > &
@@ -860,6 +916,11 @@ export interface ApiSizeSize extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
+    pizzas: Attribute.Relation<
+      'api::size.size',
+      'manyToMany',
+      'api::pizza.pizza'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -890,6 +951,7 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::dough.dough': ApiDoughDough;
       'api::ingredient.ingredient': ApiIngredientIngredient;
+      'api::pizza.pizza': ApiPizzaPizza;
       'api::size.size': ApiSizeSize;
     }
   }
